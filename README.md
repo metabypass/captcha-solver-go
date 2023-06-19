@@ -14,7 +14,7 @@ var PASSWORD = "YOUR_ACCOUNT_PASSWORD"        //****CHANGE HERE WITH YOUR VALUE*
 ```
 
 1. Go to [Application Section](https://app.metabypass.tech/application)
-2. You can see credentials like below image
+2. You can see credentials like the below image
 
 
 
@@ -25,9 +25,9 @@ var PASSWORD = "YOUR_ACCOUNT_PASSWORD"        //****CHANGE HERE WITH YOUR VALUE*
 
   - **Text_Captcha**
     
-    Using the below function to get a bytes object for transferring images as text in API requests
+    The below function gets a bytes object for transferring images as text in API requests
 
-    ```go
+    ``` go
     func imageToBase64(imagePath string) string {
       // Read the image file
       imageData, err := ioutil.ReadFile(imagePath)
@@ -45,7 +45,7 @@ var PASSWORD = "YOUR_ACCOUNT_PASSWORD"        //****CHANGE HERE WITH YOUR VALUE*
 
     The following function returns the result of your captcha image
 
-    ```go
+    ``` go
     func textCaptcha(imagePath string) (string, int, string) {
     	payloadString := fmt.Sprintf(`{"image":"%s"}`, imageToBase64(imagePath))
     	data, code, message := request(payloadString, "POST", urlTextCaptcha, true)

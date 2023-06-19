@@ -1,4 +1,4 @@
-![239733451-4420f7ed-1588-412a-b0e8-2876d4ae1854](https://github.com/metabypass/captcha-solver-go/assets/128980891/cb8519f1-b8f0-4952-815d-053b2499cb47)![239733451-4420f7ed-1588-412a-b0e8-2876d4ae1854](https://github.com/metabypass/captcha-solver-go/assets/128980891/9a7b1db2-a565-42be-a987-93541955a531)# Go-based CAPTCHA solver ([Metabypass](https://metabypass.tech))
+# Go-based CAPTCHA solver ([Metabypass](https://metabypass.tech))
 Free demo (no credit card required) -> https://app.metabypass.tech/application
 
 

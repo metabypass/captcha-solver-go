@@ -35,10 +35,10 @@ type TypeAccessToken struct {
 }
 
 // Your Application Info
-var CLIENT_ID = "72"                                           //"YOUR_CLIENT_ID"       //****CHANGE HERE WITH YOUR VALUE*******
-var CLIENT_SECRET = "yD3LuTOUefIBsczQK2RxgoUN3aV6aK9R9JSmnPvi" //****CHANGE HERE WITH YOUR VALUE*******
-var EMAIL = "abbas.habibnejad.j@gmail.com"                     //****CHANGE HERE WITH YOUR VALUE*******
-var PASSWORD = "12345678"                                      //****CHANGE HERE WITH YOUR VALUE*******
+var CLIENT_ID = "YOUR_CLIENT_ID"               //"YOUR_CLIENT_ID"       //****CHANGE HERE WITH YOUR VALUE*******
+var CLIENT_SECRET = "YOUR_CLIENT_SECRET"       //****CHANGE HERE WITH YOUR VALUE*******
+var EMAIL = "YOUR_ACCOUNT_EMAIL"               //****CHANGE HERE WITH YOUR VALUE*******
+var PASSWORD = "YOUR_ACCOUNT_PASSWORD"         //****CHANGE HERE WITH YOUR VALUE*******
 
 var urlTextCaptcha = "https://app.metabypass.tech/CaptchaSolver/api/v1/services/captchaSolver"
 var urlRecaptcha = "https://app.metabypass.tech/CaptchaSolver/api/v1/services/bypassReCaptcha"
@@ -243,10 +243,9 @@ func getCaptchaResult(recaptchaId int) (string, int, string) {
 }
 
 func main() {
-	//token, code, message := recaptchaV3("6LcOxacUAAAAAIIdrA69qBV3OX_iGf1gI0aj7lG7", "https://freegetcoins.com/auth/login")
-	token, code, message := recaptchaV2("6LfPFI0UAAAAABnuilqLhBJA8LCwziOXnt0NNPaU", "https://venesh.ir")
-	//token, code, message := getCaptchaResult(20082)
-	// token, code, message := textCaptcha("C:\\Users\\abbas\\Desktop\\captcha.png")
+	//token, code, message := recaptchaV3("YOUR_SITE_KEY", "YOUR_SITE_URL")
+	//token, code, message := recaptchaV2("YOUR_SITE_KEY", "YOUR_SITE_URL")
+	token, code, message := textCaptcha("YOUR_CAPTCHA_IMAGE_PATH")
 
 	fmt.Println("code: " + strconv.Itoa(code))
 	fmt.Println("message: " + message)

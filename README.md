@@ -59,7 +59,11 @@ var PASSWORD = "YOUR_ACCOUNT_PASSWORD"        //****CHANGE HERE WITH YOUR VALUE*
       ```go
       //token, code, message := recaptchaV3("YOUR_SITE_KEY", "YOUR_SITE_URL")
       ```
-    
+  - Write this command in your cmd to run code:
+    ```
+     go run main.go
+    ```
+       
 
 
 

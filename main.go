@@ -35,7 +35,7 @@ type TypeAccessToken struct {
 }
 
 // Your Application Info
-var CLIENT_ID = "YOUR_CLIENT_ID"               //"YOUR_CLIENT_ID"       //****CHANGE HERE WITH YOUR VALUE*******
+var CLIENT_ID = "YOUR_CLIENT_ID"               //****CHANGE HERE WITH YOUR VALUE*******
 var CLIENT_SECRET = "YOUR_CLIENT_SECRET"       //****CHANGE HERE WITH YOUR VALUE*******
 var EMAIL = "YOUR_ACCOUNT_EMAIL"               //****CHANGE HERE WITH YOUR VALUE*******
 var PASSWORD = "YOUR_ACCOUNT_PASSWORD"         //****CHANGE HERE WITH YOUR VALUE*******
@@ -245,7 +245,7 @@ func getCaptchaResult(recaptchaId int) (string, int, string) {
 func main() {
 	//token, code, message := recaptchaV3("YOUR_SITE_KEY", "YOUR_SITE_URL")
 	//token, code, message := recaptchaV2("YOUR_SITE_KEY", "YOUR_SITE_URL")
-	token, code, message := textCaptcha("YOUR_CAPTCHA_IMAGE_PATH")
+	//token, code, message := textCaptcha("YOUR_CAPTCHA_IMAGE_PATH")
 
 	fmt.Println("code: " + strconv.Itoa(code))
 	fmt.Println("message: " + message)

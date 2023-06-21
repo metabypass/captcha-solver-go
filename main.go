@@ -1,4 +1,4 @@
-package MetaBypass
+package captcha_solver_go
 
 import (
 	"encoding/base64"

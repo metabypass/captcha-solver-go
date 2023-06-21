@@ -47,6 +47,10 @@ var urlRecaptcha = "https://app.metabypass.tech/CaptchaSolver/api/v1/services/by
 var urlGetCaptchaResult = "https://app.metabypass.tech/CaptchaSolver/api/v1/services/getCaptchaResult"
 
 
+
+func (ac *AuthClient) GetCredentials() (string, string, string, string) {
+	return ac.ClientID, ac.ClientSecret, ac.Email, ac.Password
+}
 func NewAuthClient(clientID, clientSecret, email, password string) *AuthClient {
 	return &AuthClient{
 		ClientID:     clientID,
@@ -55,9 +59,9 @@ func NewAuthClient(clientID, clientSecret, email, password string) *AuthClient {
 		Password:     password,
 	}
 }
-
-func (c *AuthClient) request(payload string, method string, url string, resend401 bool) (TypeData, int, string) {
-	accessToken, successful := c.getAccessToken(false)
+// var payload string= fmt.Sprintf(`{"grant_type":"password","client_id": "%s" ,"client_secret": "%s","username": "%s","password": "%s"}`, NewAuthClient())
+func request(payload string, method string, url string, resend401 bool, authClient *AuthClient) (TypeData, int, string) {
+	accessToken, successful := getAccessToken(false,authClient)
 	if successful {
 		newPayload := strings.NewReader(payload)
 
@@ -89,9 +93,9 @@ func (c *AuthClient) request(payload string, method string, url string, resend40
 		}
 
 		if data.Status_code == 401 {
-			c.getAccessToken(true)
+			getAccessToken(true,authClient)
 			if resend401 {
-				return c.request(payload, method, url, false)
+				return request(payload, method, url, false,authClient)
 			} else {
 				return data.Data, data.Status_code, data.Message
 			}
@@ -103,9 +107,9 @@ func (c *AuthClient) request(payload string, method string, url string, resend40
 	}
 }
 
-func (c *AuthClient) getAccessToken(refresh bool) (string, bool) {
+func getAccessToken(refresh bool, authClient *AuthClient) (string, bool) {
 	if refresh {
-		newAccessToken, successful := c.serviceGetAccessToken()
+		newAccessToken, successful := serviceGetAccessToken(authClient)
 		saveAccessTokenToFile(newAccessToken)
 		return newAccessToken, successful
 	}
@@ -114,22 +118,22 @@ func (c *AuthClient) getAccessToken(refresh bool) (string, bool) {
 		if len(accessToken) > 5 {
 			return accessToken, true
 		} else {
-			newAccessToken, successful := c.serviceGetAccessToken()
+			newAccessToken, successful := serviceGetAccessToken(authClient)
 			saveAccessTokenToFile(newAccessToken)
 			return newAccessToken, successful
 		}
 	} else {
-		newAccessToken, successful := c.serviceGetAccessToken()
+		newAccessToken, successful := serviceGetAccessToken(authClient)
 		saveAccessTokenToFile(newAccessToken)
 		return newAccessToken, successful
 	}
 }
 
 
-func (c *AuthClient) serviceGetAccessToken() (string, bool) {
+func serviceGetAccessToken(authClient *AuthClient) (string, bool) {
 	url := "https://app.metabypass.tech/CaptchaSolver/oauth/token"
 	method := "POST"
-	payload := fmt.Sprintf(`{"grant_type":"password","client_id": "%s" ,"client_secret": "%s","username": "%s","password": "%s"}`, c.ClientID, c.ClientSecret, c.Email, c.Password)
+	payload := fmt.Sprintf(`{"grant_type":"password","client_id": "%s" ,"client_secret": "%s","username": "%s","password": "%s"}`, authClient.ClientID, authClient.ClientSecret, authClient.Email, authClient.Password)
 	newPayload := strings.NewReader(payload)
 
 	client := &http.Client{}
@@ -198,37 +202,37 @@ func imageToBase64(imagePath string) string {
 	return base64Data
 }
 
-func (c *AuthClient) textCaptcha(imagePath string) (string, int, string) {
+func  textCaptcha(imagePath, clientID, clientSecret, email, password string,authClient *AuthClient ) (string, int, string) {
 	payloadString := fmt.Sprintf(`{
 	"image":"%s"
 }`, imageToBase64(imagePath))
-	data, code, message := c.request(payloadString, "POST", urlTextCaptcha, true)
+	data, code, message := request(payloadString, "POST", urlTextCaptcha, true,authClient)
 	return data.Result, code, message
 }
 
-func (c *AuthClient) recaptchaV3(sitekey string, siteUrl string) (string, int, string) {
+func recaptchaV3(sitekey, siteUrl, clientID, clientSecret, email, password string,authClient *AuthClient) (string, int, string) {
 	payloadString := fmt.Sprintf(`{
 	"sitekey":"%s",
 	  "version": 3 ,
 	  "url": "%s"
 }`, sitekey, siteUrl)
-	data, code, message := c.request(payloadString, "POST", urlRecaptcha, true)
+	data, code, message := request(payloadString, "POST", urlRecaptcha, true,authClient)
 	return data.RecaptchaResponse, code, message
 }
 
-func (c *AuthClient) recaptchaV2(sitekey string, siteUrl string) (string, int, string) {
+func recaptchaV2(sitekey, siteUrl, clientID, clientSecret, email, password string,authClient *AuthClient) (string, int, string){
 	payloadString := fmt.Sprintf(`{
 	"sitekey":"%s",
 	  "version": 2 ,
 	  "url": "%s"
 }`, sitekey, siteUrl)
-	data, code, message := c.request(payloadString, "POST", urlRecaptcha, true)
+	data, code, message := request(payloadString, "POST", urlRecaptcha, true,authClient)
 	if code == 200 {
 		fmt.Println("Registration request successfully. Captcha id: " + strconv.Itoa(data.RecaptchaId))
 		index := 1
 		for index <= 12 {
 			time.Sleep(10 * time.Second)
-			token, code, message := c.getCaptchaResult(data.RecaptchaId)
+			token, code, message := getCaptchaResult(data.RecaptchaId,authClient)
 			if code == 200 {
 				return token, code, message
 			} else if code == 201 {
@@ -245,12 +249,11 @@ func (c *AuthClient) recaptchaV2(sitekey string, siteUrl string) (string, int, s
 	return "", 500, "service failed"
 }
 
-func (c *AuthClient) getCaptchaResult(recaptchaId int) (string, int, string) {
+func getCaptchaResult(recaptchaId int,authClient *AuthClient ) (string, int, string) {
 	strRecaptchaId := strconv.Itoa(recaptchaId)
 	payloadString := fmt.Sprintf(`{
 	"recaptcha_id":"%s"
 }`, strRecaptchaId)
-	data, code, message := c.request(payloadString, "GET", urlGetCaptchaResult, true)
+	data, code, message := request(payloadString, "GET", urlGetCaptchaResult, true,authClient)
 	return data.RecaptchaResponse, code, message
 }
-

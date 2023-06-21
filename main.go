@@ -46,6 +46,7 @@ var urlTextCaptcha = "https://app.metabypass.tech/CaptchaSolver/api/v1/services/
 var urlRecaptcha = "https://app.metabypass.tech/CaptchaSolver/api/v1/services/bypassReCaptcha"
 var urlGetCaptchaResult = "https://app.metabypass.tech/CaptchaSolver/api/v1/services/getCaptchaResult"
 
+
 func NewAuthClient(clientID, clientSecret, email, password string) *AuthClient {
 	return &AuthClient{
 		ClientID:     clientID,
@@ -54,7 +55,6 @@ func NewAuthClient(clientID, clientSecret, email, password string) *AuthClient {
 		Password:     password,
 	}
 }
-
 
 func (c *AuthClient) request(payload string, method string, url string, resend401 bool) (TypeData, int, string) {
 	accessToken, successful := c.getAccessToken(false)

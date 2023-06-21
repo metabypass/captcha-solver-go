@@ -48,9 +48,6 @@ var urlGetCaptchaResult = "https://app.metabypass.tech/CaptchaSolver/api/v1/serv
 
 var myObj *AuthClient
 
-// func (ac *AuthClient) GetCredentials() (string, string, string, string) {
-// 	return ac.ClientID, ac.ClientSecret, ac.Email, ac.Password
-// }
 func NewAuthClient(clientID, clientSecret, email, password string) {
 	myObj = &AuthClient{
 		ClientID:     clientID,
@@ -59,7 +56,7 @@ func NewAuthClient(clientID, clientSecret, email, password string) {
 		Password:     password,
 	}
 }
-// var payload string= fmt.Sprintf(`{"grant_type":"password","client_id": "%s" ,"client_secret": "%s","username": "%s","password": "%s"}`, NewAuthClient())
+
 func request(payload string, method string, url string, resend401 bool) (TypeData, int, string) {
 	accessToken, successful := getAccessToken(false)
 	if successful {

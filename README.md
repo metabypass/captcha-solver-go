@@ -4,14 +4,7 @@ Free demo (no credit card required) -> https://app.metabypass.tech/application
 
 ## Configuration
 
-Get the following credentials from the [Application](https://app.metabypass.tech/application) section of the MetaBypass website:
-
-``` go
-var CLIENT_ID = "YOUR_CLIENT_ID"                 //****CHANGE HERE WITH YOUR VALUE*******
-var CLIENT_SECRET = "YOUR_CLIENT_SECRET"        //****CHANGE HERE WITH YOUR VALUE*******
-var EMAIL = "YOUR_ACCOUNT_EMAIL"               //****CHANGE HERE WITH YOUR VALUE*******
-var PASSWORD = "YOUR_ACCOUNT_PASSWORD"        //****CHANGE HERE WITH YOUR VALUE*******
-```
+Get the credentials from the [Application](https://app.metabypass.tech/application) section of the MetaBypass website:
 
 1. Go to [Application Section](https://app.metabypass.tech/application)
 2. You can see credentials like the below image
@@ -23,47 +16,51 @@ var PASSWORD = "YOUR_ACCOUNT_PASSWORD"        //****CHANGE HERE WITH YOUR VALUE*
 
  ## Implementation:
 
-  - Download 'main.go'
-  - To obtain the results for each type of captcha, **uncomment** the following codes in the 'main' function:
-    - **Text_Captcha**
-      
-      ```go
-      //token, code, message := textCaptcha("YOUR_CAPTCHA_IMAGE_PATH")
-      ```
   
-       The 'textCaptcha' function gets the captcha imagePath, then use the 'imageToBase64' function to get a bytes object for transferring images as text in API requests, and finally sends a request to get the result of your captcha image
-   
-      ``` go
-      func imageToBase64(imagePath string) string {
-        // Read the image file
-        imageData, err := ioutil.ReadFile(imagePath)
-        if err != nil {
-          log.Fatal("Error reading image file:", err)
-        }
-      
-        // Convert image data to base64
-        base64Data := base64.StdEncoding.EncodeToString(imageData)
-      
-        // Print the base64 encoded image data
-        return base64Data
-      }
-      ```
-    - **ReCaptcha V2**
-      
-      ```go
-      //token, code, message := recaptchaV2("YOUR_SITE_KEY", "YOUR_SITE_URL")
-      ```
-      
-    - **ReCaptcha V3**
-      
-      ```go
-      //token, code, message := recaptchaV3("YOUR_SITE_KEY", "YOUR_SITE_URL")
-      ```
-  - Write this command in your cmd to run code:
-    ```
-     go run main.go
-    ```
+To obtain the results for each type of captcha, do the following steps:
+   1. Create a new folder in your device and open it by your IDE
+       
+   2. Write the following command in a terminal to create **go.mod** file
        
 
+      ```go
+      
+      go mod init <WRITE_NAME_YOU_WANT>
+      
+      ```
+  
+   3. Then write the below command to get the package from this repository. It creates **go.sum**  in your directory.
+       ``` go
+
+      go get github.com/metabypass/captcha-solver-go
+      
+       ```
+
+   4. Create **main.go** file, copy the following code, and change function inputs with your values.
+      For using each kind of reCAPTCHA **uncomment** its function ('TextCaptcha' or 'RecaptchaV2' or 'RecaptchaV3') and **comment**  others.
+       ```go
+
+      package main
+      import "fmt"
+      import "strconv"
+      import captcha_solver_go "github.com/metabypass/captcha-solver-go"
+      
+      func main() {
+      	captcha_solver_go.NewAuthClient("YOUR_CLIENT_ID", "YOUR_CLIENT_SECRET", "YOUR_ACCOUNT_EMAIL", "YOUR_ACCOUNT_PASSWORD") // ****CHANGE HERE WITH YOUR VALUE*******
+ 
+      	token, code, message := captcha_solver_go.TextCaptcha("YOUR_CAPTCHA_IMAGE_PATH") // ****CHANGE HERE WITH YOUR VALUE*******
+        //token, code, message := captcha_solver_go.RecaptchaV2("YOUR_SITE_KEY","YOUR_SITE_URL") // ****CHANGE HERE WITH YOUR VALUE*******
+ 	    //token, code, message := captcha_solver_go.RecaptchaV3("YOUR_SITE_KEY","YOUR_SITE_URL") // ****CHANGE HERE WITH YOUR VALUE*******
+      
+      	fmt.Println("code: " + strconv.Itoa(code))
+      	fmt.Println("message: " + message)
+      	fmt.Println("token: " + token)
+      	}
+       ```
+
+   5. Write this command in your terminal to get the result:
+       ``` go
+       go run main.go
+       ```
 
 

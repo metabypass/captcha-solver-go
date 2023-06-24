@@ -36,29 +36,71 @@ To obtain the results for each type of captcha, do the following steps:
       
        ```
 
-   4. Create **main.go** file, copy the following code, and change function inputs with your values.
-      For using each kind of reCAPTCHA **uncomment** its function (**'TextCaptcha'** or **'RecaptchaV2'** or **'RecaptchaV3'**) and **comment**  others.
-       ```go
+   4. Create **main.go** file, copy the following codes for each type of captcha, and change function inputs with your values.
+       
+       - **Text_Captcha**
+     
+         ```go
+         package main
+         import "fmt"
+         import "strconv"
+         import captcha_solver_go "github.com/metabypass/captcha-solver-go"
+         
+         func main() {
+         	captcha_solver_go.NewAuthClient("YOUR_CLIENT_ID", "YOUR_CLIENT_SECRET", "YOUR_ACCOUNT_EMAIL", "YOUR_ACCOUNT_PASSWORD") // ****CHANGE HERE WITH YOUR VALUE*******
+    
+         	token, code, message := captcha_solver_go.TextCaptcha("YOUR_CAPTCHA_IMAGE_PATH") // ****CHANGE HERE WITH YOUR VALUE*******
+         
+         	fmt.Println("code: " + strconv.Itoa(code))
+         	fmt.Println("message: " + message)
+         	fmt.Println("token: " + token)
+         	}
+       
+         ```
+       
+       - **Recaptcha V2**
+    
+         ``` go
+         package main
+         import "fmt"
+         import "strconv"
+         import captcha_solver_go "github.com/metabypass/captcha-solver-go"
+         
+         func main() {
+         	captcha_solver_go.NewAuthClient("YOUR_CLIENT_ID", "YOUR_CLIENT_SECRET", "YOUR_ACCOUNT_EMAIL", "YOUR_ACCOUNT_PASSWORD") // ****CHANGE HERE WITH YOUR VALUE*******
+    
+          token, code, message := captcha_solver_go.RecaptchaV2("YOUR_SITE_KEY","YOUR_SITE_URL") // ****CHANGE HERE WITH YOUR VALUE*******
+         
+         	fmt.Println("code: " + strconv.Itoa(code))
+         	fmt.Println("message: " + message)
+         	fmt.Println("token: " + token)
+         	}
 
-      package main
-      import "fmt"
-      import "strconv"
-      import captcha_solver_go "github.com/metabypass/captcha-solver-go"
       
-      func main() {
-      	captcha_solver_go.NewAuthClient("YOUR_CLIENT_ID", "YOUR_CLIENT_SECRET", "YOUR_ACCOUNT_EMAIL", "YOUR_ACCOUNT_PASSWORD") // ****CHANGE HERE WITH YOUR VALUE*******
- 
-      	token, code, message := captcha_solver_go.TextCaptcha("YOUR_CAPTCHA_IMAGE_PATH") // ****CHANGE HERE WITH YOUR VALUE*******
-        //token, code, message := captcha_solver_go.RecaptchaV2("YOUR_SITE_KEY","YOUR_SITE_URL") // ****CHANGE HERE WITH YOUR VALUE*******
- 	    //token, code, message := captcha_solver_go.RecaptchaV3("YOUR_SITE_KEY","YOUR_SITE_URL") // ****CHANGE HERE WITH YOUR VALUE*******
-      
-      	fmt.Println("code: " + strconv.Itoa(code))
-      	fmt.Println("message: " + message)
-      	fmt.Println("token: " + token)
-      	}
-       ```
+         ```
+       
+        - **Recaptcha V3**
+         
+           ```go
+    
+          package main
+          import "fmt"
+          import "strconv"
+          import captcha_solver_go "github.com/metabypass/captcha-solver-go"
+          
+          func main() {
+          	captcha_solver_go.NewAuthClient("YOUR_CLIENT_ID", "YOUR_CLIENT_SECRET", "YOUR_ACCOUNT_EMAIL", "YOUR_ACCOUNT_PASSWORD") // ****CHANGE HERE WITH YOUR VALUE*******
+     
+     	     token, code, message := captcha_solver_go.RecaptchaV3("YOUR_SITE_KEY","YOUR_SITE_URL") // ****CHANGE HERE WITH YOUR VALUE*******
+          
+          	fmt.Println("code: " + strconv.Itoa(code))
+          	fmt.Println("message: " + message)
+          	fmt.Println("token: " + token)
+          	}
+           
+           ```
 
-   5. Write this command in your terminal to get the result:
+   4. Write this command in your terminal to get the result:
        ``` go
        go run main.go
        ```

@@ -37,7 +37,7 @@ To obtain the results for each type of captcha, do the following steps:
        ```
 
    4. Create **main.go** file, copy the following code, and change function inputs with your values.
-      For using each kind of reCAPTCHA **uncomment** its function ('TextCaptcha' or 'RecaptchaV2' or 'RecaptchaV3') and **comment**  others.
+      For using each kind of reCAPTCHA **uncomment** its function (**'TextCaptcha'** or **'RecaptchaV2'** or **'RecaptchaV3'**) and **comment**  others.
        ```go
 
       package main

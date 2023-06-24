@@ -69,36 +69,34 @@ To obtain the results for each type of captcha, do the following steps:
          func main() {
          	captcha_solver_go.NewAuthClient("YOUR_CLIENT_ID", "YOUR_CLIENT_SECRET", "YOUR_ACCOUNT_EMAIL", "YOUR_ACCOUNT_PASSWORD") // ****CHANGE HERE WITH YOUR VALUE*******
     
-          token, code, message := captcha_solver_go.RecaptchaV2("YOUR_SITE_KEY","YOUR_SITE_URL") // ****CHANGE HERE WITH YOUR VALUE*******
+         	token, code, message := captcha_solver_go.RecaptchaV2("YOUR_SITE_KEY","YOUR_SITE_URL") // ****CHANGE HERE WITH YOUR VALUE*******
          
          	fmt.Println("code: " + strconv.Itoa(code))
          	fmt.Println("message: " + message)
          	fmt.Println("token: " + token)
          	}
-
-      
+       
          ```
        
-        - **Recaptcha V3**
-         
-           ```go
+       - **Recaptcha V3**
     
-          package main
-          import "fmt"
-          import "strconv"
-          import captcha_solver_go "github.com/metabypass/captcha-solver-go"
-          
-          func main() {
-          	captcha_solver_go.NewAuthClient("YOUR_CLIENT_ID", "YOUR_CLIENT_SECRET", "YOUR_ACCOUNT_EMAIL", "YOUR_ACCOUNT_PASSWORD") // ****CHANGE HERE WITH YOUR VALUE*******
-     
-     	     token, code, message := captcha_solver_go.RecaptchaV3("YOUR_SITE_KEY","YOUR_SITE_URL") // ****CHANGE HERE WITH YOUR VALUE*******
-          
-          	fmt.Println("code: " + strconv.Itoa(code))
-          	fmt.Println("message: " + message)
-          	fmt.Println("token: " + token)
-          	}
-           
-           ```
+         ``` go
+         package main
+         import "fmt"
+         import "strconv"
+         import captcha_solver_go "github.com/metabypass/captcha-solver-go"
+         
+         func main() {
+         	captcha_solver_go.NewAuthClient("YOUR_CLIENT_ID", "YOUR_CLIENT_SECRET", "YOUR_ACCOUNT_EMAIL", "YOUR_ACCOUNT_PASSWORD") // ****CHANGE HERE WITH YOUR VALUE*******
+    
+         	token, code, message := captcha_solver_go.RecaptchaV3("YOUR_SITE_KEY","YOUR_SITE_URL") // ****CHANGE HERE WITH YOUR VALUE*******
+         
+         	fmt.Println("code: " + strconv.Itoa(code))
+         	fmt.Println("message: " + message)
+         	fmt.Println("token: " + token)
+         	}
+       
+         ```
 
    4. Write this command in your terminal to get the result:
        ``` go
